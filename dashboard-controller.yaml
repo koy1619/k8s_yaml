@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - args:
-        - --apiserver-host=http://k8s-master:8080
+        - --apiserver-host=http://10.255.0.170:8080
         image: registry:5000/kubernetes-dashboard-amd64:v1.7.1
         imagePullPolicy: IfNotPresent
         livenessProbe:
