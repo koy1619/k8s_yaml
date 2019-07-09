@@ -30,8 +30,11 @@ spec:
     spec:
       containers:
       - name: kubedns
-        #修改image地址，默认是google的仓库地址，如果不担心被墙，可以直接使用，我这里使用的私有仓库地址，如果要使用国内其他仓库地址，推荐使用阿里云镜像库
         image: registry:5000/kubedns-amd64:1.9
+        volumeMounts:
+         - name: timezone
+           mountPath: /etc/localtime
+
         resources:
           # TODO: Set memory limits when we've profiled the container for large
           # clusters, then set request = limit to keep this container in
@@ -157,3 +160,8 @@ spec:
         - containerPort: 8080
           protocol: TCP
       dnsPolicy: Default  # Don't use cluster DNS.
+
+      volumes:
+      - name: timezone
+        hostPath:
+          path: /usr/share/zoneinfo/Asia/Shanghai
