@@ -27,6 +27,9 @@ spec:
         - --apiserver-host=http://10.255.0.170:8080
         image: registry:5000/kubernetes-dashboard-amd64:v1.7.1
         imagePullPolicy: IfNotPresent
+        volumeMounts:
+         - name: timezone
+           mountPath: /etc/localtime
 
         livenessProbe:
           failureThreshold: 3
@@ -51,3 +54,8 @@ spec:
             memory: 50Mi
       dnsPolicy: ClusterFirst
       restartPolicy: Always 
+
+      volumes:
+      - name: timezone
+        hostPath:
+          path: /usr/share/zoneinfo/Asia/Shanghai
