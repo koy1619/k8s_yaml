@@ -28,15 +28,6 @@ spec:
         image: registry:5000/kubernetes-dashboard-amd64:v1.7.1
         imagePullPolicy: IfNotPresent
 
-        volumeMounts:
-        - name: date-config
-          mountPath: /etc/localtime
-        command: ["sleep", "60000"]
-      volumes:
-      - name: date-config
-       hostPath:
-        path: /etc/localtime
-
         livenessProbe:
           failureThreshold: 3
           httpGet:
