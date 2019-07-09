@@ -90,6 +90,9 @@ spec:
           protocol: TCP
       - name: dnsmasq
         image: registry:5000/kube-dnsmasq-amd64:1.4
+        volumeMounts:
+         - name: timezone
+           mountPath: /etc/localtime
         livenessProbe:
           httpGet:
             path: /healthz-dnsmasq
@@ -118,6 +121,9 @@ spec:
             memory: 10Mi
       - name: dnsmasq-metrics
         image: registry:5000/dnsmasq-metrics-amd64:1.0
+        volumeMounts:
+         - name: timezone
+           mountPath: /etc/localtime
         livenessProbe:
           httpGet:
             path: /metrics
@@ -139,6 +145,9 @@ spec:
             memory: 10Mi
       - name: healthz
         image: registry:5000/exechealthz-amd64:1.2
+        volumeMounts:
+         - name: timezone
+           mountPath: /etc/localtime
         resources:
           limits:
             memory: 50Mi
