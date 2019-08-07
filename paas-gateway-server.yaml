@@ -1,0 +1,59 @@
+# ------------------- App Deployment ------------------- #
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: paas-gateway-server
+spec:
+  template:
+    metadata:
+      labels:
+        app: paas-gateway-server
+    spec:
+      hostAliases:
+      - ip: "10.255.0.166"
+        hostnames:
+        - "pigx-register"
+      containers:
+        - name: paas-gateway-server
+          image: 'registry:5000/paas-gateway-server:latest'
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests:
+              cpu: 1024m
+              memory: 1Gi
+          volumeMounts:
+            - name: timezone
+              mountPath: /etc/localtime
+      volumes:
+        - name: timezone
+          hostPath:
+            path: /usr/share/zoneinfo/Asia/Shanghai
+---
+# ------------------- App Service ------------------- #
+apiVersion: v1
+kind: Service
+metadata:
+  name: paas-gateway-web
+  namespace: default
+spec:
+  selector:
+    app: paas-gateway-server
+  ports:
+  - name: web
+    port: 80
+    targetPort: 8080
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: paas-gateway-web
+  namespace: default
+spec:
+  rules:
+  - host: paas-gateway.e-buychina.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: paas-gateway-web
+          servicePort: web
