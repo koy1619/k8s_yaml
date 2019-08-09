@@ -18,9 +18,12 @@ spec:
           image: 'registry:5000/paas-gateway-server:latest'
           imagePullPolicy: IfNotPresent
           resources:
+            limits:
+              cpu: "1"             #限制pod申请最大的cpu数量为1个cpu
+              memory: 1Gi          #申请内存最大值
             requests:
-              cpu: 1024m
-              memory: 1Gi
+              cpu: "0.5"           #pod申请的cpu数量为0.5个cpu
+              memory: 512Mi        #申请内存的最小值
           volumeMounts:
             - name: timezone
               mountPath: /etc/localtime
@@ -35,6 +38,10 @@ kind: Service
 metadata:
   name: paas-gateway-web
   namespace: default
+#  annotations:
+#    traefik.ingress.kubernetes.io/affinity: "true"
+#    traefik.ingress.kubernetes.io/session-cookie-name: "xxx"
+#    traefik.ingress.kubernetes.io/load-balancer-method: drr
 spec:
   selector:
     app: paas-gateway-server
@@ -48,6 +55,10 @@ kind: Ingress
 metadata:
   name: paas-gateway-web
   namespace: default
+#  annotations:
+#    kubernetes.io/ingress.class: traefik
+#    traefik.frontend.rule.type: PathPrefix
+
 spec:
   rules:
   - host: paas-gateway.e-buychina.com
