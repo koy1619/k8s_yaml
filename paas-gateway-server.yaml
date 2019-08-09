@@ -21,7 +21,8 @@ spec:
       containers:
         - name: paas-gateway-server
           image: 'registry:5000/paas-gateway-server:latest'
-          imagePullPolicy: IfNotPresent
+          #imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           resources:
             limits:
               cpu: "1"             #限制pod申请最大的cpu数量为1个cpu
