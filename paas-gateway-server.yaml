@@ -12,7 +12,12 @@ spec:
       hostAliases:
       - ip: "10.255.0.166"
         hostnames:
-        - "pigx-register"
+        - "paas-nacos-register"
+        - "paas-nacos-config"
+      - ip: "10.1.2.3"
+        hostnames:
+        - "foo.remote"
+        - "bar.remote"
       containers:
         - name: paas-gateway-server
           image: 'registry:5000/paas-gateway-server:latest'
