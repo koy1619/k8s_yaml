@@ -49,7 +49,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: paas-gateway-web
+  name: paas-gateway-service
   namespace: default
 #  annotations:
 #    traefik.ingress.kubernetes.io/affinity: "true"
@@ -63,10 +63,11 @@ spec:
     port: 80
     targetPort: 8080
 ---
+# ------------------- App Ingress ------------------- #
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: paas-gateway-web
+  name: paas-gateway-web-1
   namespace: default
 #  annotations:
 #    kubernetes.io/ingress.class: traefik
@@ -79,5 +80,26 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: paas-gateway-web
+          serviceName: paas-gateway-service
+          servicePort: web
+
+---
+# ------------------- App Ingress ------------------- #
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: paas-gateway-web-2
+  namespace: default
+#  annotations:
+#    kubernetes.io/ingress.class: traefik
+#    traefik.frontend.rule.type: PathPrefix
+
+spec:
+  rules:
+  - host: paas-gateway-2.e-buychina.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: paas-gateway-service
           servicePort: web
