@@ -4,6 +4,7 @@ kind: Deployment
 metadata:
   name: paas-gateway-server
 spec:
+  replicas: 3           #relicas指定容器副本数量，默认为1
   template:
     metadata:
       labels:
