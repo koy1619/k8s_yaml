@@ -1,0 +1,72 @@
+# ------------------- App Deployment ------------------- #
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: paas-app-starbucksb2b
+spec:
+  template:
+    metadata:
+      labels:
+        app: paas-app-starbucksb2b
+    spec:
+      containers:
+        - name: paas-app-starbucksb2b
+          image: 'registry:5000/paas-app-starbucksb2b:latest'
+          #imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: "0.5"             #限制pod申请最大的cpu数量为1个cpu
+              memory: 1Gi          #申请内存最大值
+            requests:
+              cpu: "0.2"           #pod申请的cpu数量为0.5个cpu
+              memory: 512Mi        #申请内存的最小值
+          volumeMounts:
+            - name: applog
+              mountPath: /app/logs
+      volumes:
+        - name: applog
+          hostPath:
+            path: /app/logs/paas-app-starbucksb2b
+            type: DirectoryOrCreate
+
+---
+# ------------------- App Service ------------------- #
+apiVersion: v1
+kind: Service
+metadata:
+  name: paas-app-starbucksb2b-service
+  namespace: default
+#  annotations:
+#    traefik.ingress.kubernetes.io/affinity: "true"
+#    traefik.ingress.kubernetes.io/session-cookie-name: "xxx"
+#    traefik.ingress.kubernetes.io/load-balancer-method: drr
+
+spec:
+  selector:
+    app: paas-app-starbucksb2b
+  type: NodePort
+  ports:
+    - port: 8088
+      targetPort: 8088
+      nodePort: 30445
+---
+# ------------------- App Ingress ------------------- #
+#apiVersion: extensions/v1beta1
+#kind: Ingress
+#metadata:
+#  name: paas-app-starbucksb2b-web
+#  namespace: default
+##  annotations:
+##    kubernetes.io/ingress.class: traefik
+##    traefik.frontend.rule.type: PathPrefix
+#
+#spec:
+#  rules:
+#  - host: test-paas-app-starbucksb2b.e-buychina.com
+#    http:
+#      paths:
+#      - path: /
+#        backend:
+#          serviceName: paas-app-starbucksb2b-service
+#          servicePort: web
