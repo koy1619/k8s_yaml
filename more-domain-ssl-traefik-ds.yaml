@@ -32,7 +32,7 @@ spec:
         configMap:
           name: traefik-conf
       containers:
-      - image: registry:5000/traefik
+      - image: registry:5000/traefik:v1.7.14
         name: traefik-ingress-lb
         volumeMounts:
         - mountPath: "/k8s/paas_certs/domain-1"
