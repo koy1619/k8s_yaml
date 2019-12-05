@@ -63,7 +63,7 @@ spec:
 #
 #spec:
 #  rules:
-#  - host: test-paas-app-starbucksb2b.e-buychina.com
+#  - host: test-paas-app-starbucksb2b.domain-1.com
 #    http:
 #      paths:
 #      - path: /
