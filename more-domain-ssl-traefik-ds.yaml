@@ -22,12 +22,12 @@ spec:
       serviceAccountName: traefik-ingress-controller
       terminationGracePeriodSeconds: 60
       volumes:
-      - name: ebuychina-cert
+      - name: domain-1-cert
         secret:
-          secretName: e-buychina-tls-cert
-      - name: emallchina-cert
+          secretName: domain-1-tls-cert
+      - name: domain-2-cert
         secret:
-          secretName: e-mallchina-tls-cert
+          secretName: domain-2-tls-cert
       - name: config
         configMap:
           name: traefik-conf
@@ -35,10 +35,10 @@ spec:
       - image: registry:5000/traefik
         name: traefik-ingress-lb
         volumeMounts:
-        - mountPath: "/k8s/paas_certs/ebuychina"
-          name: "ebuychina-cert"
-        - mountPath: "/k8s/paas_certs/emallchina"
-          name: "emallchina-cert"
+        - mountPath: "/k8s/paas_certs/domain-1"
+          name: "domain-1-cert"
+        - mountPath: "/k8s/paas_certs/domain-2"
+          name: "domain-2-cert"
         - mountPath: "/k8s/paas_certs/conf"
           name: "config"
         ports:
