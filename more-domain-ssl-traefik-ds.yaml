@@ -35,11 +35,11 @@ spec:
       - image: registry:5000/traefik
         name: traefik-ingress-lb
         volumeMounts:
-        - mountPath: "/k8s/ebuy_certs/ebuychina"
+        - mountPath: "/k8s/paas_certs/ebuychina"
           name: "ebuychina-cert"
-        - mountPath: "/k8s/ebuy_certs/emallchina"
+        - mountPath: "/k8s/paas_certs/emallchina"
           name: "emallchina-cert"
-        - mountPath: "/k8s/ebuy_certs/conf"
+        - mountPath: "/k8s/paas_certs/conf"
           name: "config"
         ports:
         - name: http
@@ -58,7 +58,7 @@ spec:
             add:
             - NET_BIND_SERVICE
         args:
-        - --configFile=/k8s/ebuy_certs/conf/traefik.toml
+        - --configFile=/k8s/paas_certs/conf/traefik.toml
         - --api
         - --kubernetes
         - --logLevel=INFO
