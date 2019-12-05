@@ -75,7 +75,7 @@ metadata:
 
 spec:
   rules:
-  - host: paas-gateway.e-buychina.com
+  - host: paas-gateway.domain-1.com
     http:
       paths:
       - path: /
@@ -96,7 +96,7 @@ metadata:
 
 spec:
   rules:
-  - host: paas-gateway-2.e-buychina.com
+  - host: paas-gateway-2.domain-1.com
     http:
       paths:
       - path: /
