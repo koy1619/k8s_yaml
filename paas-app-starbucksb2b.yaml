@@ -45,6 +45,10 @@ metadata:
 spec:
   selector:
     app: paas-app-starbucksb2b
+#  sessionAffinity: ClientIP
+#  sessionAffinityConfig:
+#    clientIP:
+#      timeoutSeconds: 10800
   type: NodePort
   ports:
     - port: 8088
